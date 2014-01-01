@@ -1,0 +1,83 @@
+#include<string>;
+using std::string;
+#include<sstream>;
+using std::istringstream;
+
+
+class position
+{
+
+public:
+	virtual void get_altitude()=0;
+	virtual void get_geoposition()=0;
+
+};
+class nmea:public position
+{
+public:
+	void get_altitude(string input){
+	// Example of string input("$PGRMZ 201 f 3*18");//Assignment statement can be used to make it dynamic
+	istringstream inputstring(input);
+	string s1;
+	int s2;
+	char s3; 
+	string s4; //discard checksum
+	
+	inputstring >> s1 >> s2 >> s3 >> s4;	
+	cout<<"The following items were extracted from GPS stream: \n";
+	    <<"\nAltitude: "<<s2
+	    <<"\nUnits in Feet: "<<s3
+		
+	}
+	void get_geoposition(string input)
+	{
+	// Example of string input("$GPGLL 5133.81 N 00042.25 W*75");
+	istringstream inputstring(input);
+	string s1;
+	double s2;
+	char s3; 
+	double s4;
+	string s5; //discard checksum
+	
+	inputstring >> s1 >> s2 >> s3 >> s4 >>s5;	
+	cout<<"The following items were extracted from GPS stream: \n";
+	    <<"\nCurrent Latitude: "<<s2
+	    <<"\nNorth/South: "<<s3
+	    <<"\nCurrent Longitude: "<<s4
+	    <<"\nEast/West: "<<s5[0]
+	}
+
+};
+
+
+
+};
+void main()
+{
+string input;
+int mine;
+class position(); //constructor for class position
+class nmea(); //constructor
+while(1)
+{
+	cout<<"\n\n++++++++ Below are the available choices+++++++\n\n";
+	cout<<"1. PGRMZ input stream\n";
+	cout<<"2. GPGLL input stream\n";
+	cout<<"3. Exit\n";
+	cout<<"\n\n What is your choice? ";
+	cin>>mine;
+switch(mine){
+case 1:cout<<"Enter your PGRMZ stream:\n";
+	cin>>input;
+	get_altitude(input);
+case 2:cout<<"Enter your GPGLL stream:\n";
+	cin>>input;
+	get_geoposition(input);
+case 3:exit(0);
+default: cout<<"Wrong choices!!!Choices between 1 and 3 only. Try again "<<endl;
+	}		 
+}
+~class position();
+~class nmea();//destructors
+system("pause");
+}
